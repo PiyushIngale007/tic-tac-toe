@@ -1,12 +1,55 @@
 .App-header {
-  background-color: #282c34;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+    background-color: #282c34;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+}
+
+.ReactModal__Content {
+    background-color: #3C3F41 !important;
+    border-radius: 20px !important;
+}
+
+.MuiPaper-rounded {
+    border-radius: 18px !important;
 }
 
 .card {
-  margin:50px
+    margin: 50px;
+    min-width: min-content;
+    border-radius: 20px;
+}
+
+.modal-cards {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+}
+
+.img {
+    height: auto;
+    padding: 50px;
+    width: 200px;
+    display: block;
+    min-width: 50px;
+}
+
+.text {
+    text-align: center;
+    font-size: 2em;
+}
+
+@media (max-width: 700px) {
+    .card {
+        margin: 50px;
+        min-width: min-content;
+    }
+
+    .modal-cards {
+        display: grid;
+        justify-content: center;
+        margin: 20px
+    }
 }
