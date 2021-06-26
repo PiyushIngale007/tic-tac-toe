@@ -12,6 +12,25 @@
     border-radius: 20px !important;
 }
 
+.id-div {
+    background-color: rgba(150, 245, 64, 0.26);
+    text-align: center;
+    margin: 0 auto;
+}
+
+.MuiInput-underline:before {
+    border-bottom: 2px solid aliceblue !important;
+}
+.MuiInput-underline:after {
+    border-bottom: 2px solid orange !important;
+}
+.MuiInputBase-root {
+    color: aqua !important
+}
+.MuiInputBase-input {
+    text-align: center !important;
+}
+
 .MuiPaper-rounded {
     border-radius: 18px !important;
 }
