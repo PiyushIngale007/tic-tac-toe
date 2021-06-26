@@ -48,27 +48,30 @@ function App() {
                         isOpen={modalIsOpen}
                         onClose={onClose}
                     >
-                        {createJoin === "" ? <div className="modal-cards">
-                            <Card onClick={create} className="card">
-                                <CardContent>
-                                    <div>
-                                        <img className="img" src={CreateIcon} alt={""}/>
-                                    </div>
-                                    <div className="text">
-                                        <p>Create a Game</p>
-                                    </div>
-                                </CardContent>
-                            </Card>
-                            <Card onClick={join} className="card">
-                                <CardContent>
-                                    <div>
-                                        <img className="img" src={JoinIcon} alt={""}/>
-                                    </div>
-                                    <div className="text">
-                                        <p>Join a Game</p>
-                                    </div>
-                                </CardContent>
-                            </Card>
+                        {createJoin === "" ? <div>
+                            <p style={{fontSize: "2em" ,color: "white" , textAlign: "center"}}>Tic Tac Toe</p>
+                            <div className="modal-cards">
+                                <Card onClick={create} className="card">
+                                    <CardContent>
+                                        <div>
+                                            <img className="img" src={CreateIcon} alt={""}/>
+                                        </div>
+                                        <div className="text">
+                                            <p>Create a Game</p>
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                                <Card onClick={join} className="card">
+                                    <CardContent>
+                                        <div>
+                                            <img className="img" src={JoinIcon} alt={""}/>
+                                        </div>
+                                        <div className="text">
+                                            <p>Join a Game</p>
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            </div>
                         </div> : createJoin === "create" ? CreateBtnClk() : JoinBtnClk()}
                     </Modal>
                 </div> :

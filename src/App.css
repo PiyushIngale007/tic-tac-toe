@@ -22,6 +22,11 @@
     border-radius: 20px;
 }
 
+.card:hover {
+    cursor: pointer;
+    background-color: #46fcde;
+}
+
 .modal-cards {
     display: flex;
     justify-content: center;
