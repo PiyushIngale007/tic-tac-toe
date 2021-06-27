@@ -29,6 +29,7 @@
 }
 .MuiInputBase-input {
     text-align: center !important;
+    font-size: x-large !important;
 }
 
 .MuiPaper-rounded {

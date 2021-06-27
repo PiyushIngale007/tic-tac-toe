@@ -8,19 +8,19 @@ function Game(props) {
     return (
         <div style={{
             display: "grid",
-            gridTemplateColumns: "repeat(3, 100px)",
+            gridTemplateColumns: "auto auto auto",
             justifyContent: "center",
             alignContent: "center"
         }}>
-            <button onClick={() => btn_clk(0)} className="btn"></button>
-            <button className="btn"></button>
-            <button className="btn"></button>
-            <button className="btn"></button>
-            <button className="btn"></button>
-            <button className="btn"></button>
-            <button className="btn"></button>
-            <button className="btn"></button>
-            <button className="btn"></button>
+            <div onClick={() => btn_clk(0)} className="btn"></div>
+            <div className="btn"></div>
+            <div className="btn"></div>
+            <div className="btn"></div>
+            <div className="btn"></div>
+            <div className="btn"></div>
+            <div className="btn"></div>
+            <div className="btn"></div>
+            <div className="btn"></div>
         </div>
     );
 }
