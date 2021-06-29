@@ -17,6 +17,9 @@ function App() {
     const [createJoin, setCreateJoin] = useState("")
     const [joinValue, setJoinValue] = useState("")
     const [RoomId , setRoomId] = useState("")
+    const [name , setName] = useState("")
+
+
     const [testState , settestState] = useState("")
 
 
@@ -61,9 +64,14 @@ function App() {
         return (
             <div>
                 <p style={{fontFamily: "Fira Sans", fontSize: "2em", color: "white" , textAlign: "center"}}>Create a Game</p>
+                <p style={{fontSize: "2em", color: "white" , textAlign: "center"}}>Please type your name : </p>
+                <div style={{margin: "0 auto",marginTop:"10px" ,width: "max-content" ,border: "2px solid #ffffff" , borderRadius: "10px"}}>
+                    <Input onChange={(e) => {setName(e.target.value)}} style={{margin: "25px"}} placeholder={"Name"}/>
+                </div>
                 <p style={{fontSize: "2em", color: "white" , textAlign: "center"}}>Your Game Room id is : </p>
                 <div className="id-div">
                     <p style={{padding: "20px",fontSize: "2em", color: "white" , textAlign: "center"}}>{RoomId}</p>
+                    {/* <img width="25px" style={{display: "inline-flex" , verticalAlign: "middle"}} src={CopyIcon}/> */}
                 </div>
                 <Button onClick={() => {onClose()}} style={{display: "flex", margin: "0 auto" , width: "max-content"}} variant="contained" color="primary" href="#contained-buttons">
                     Start Game
@@ -85,6 +93,10 @@ function App() {
         return (
             <div>
                 <p style={{fontFamily: "Fira Sans", fontSize: "2em", color: "white" , textAlign: "center"}}>Join a Game</p>
+                <p style={{fontSize: "2em", color: "white" , textAlign: "center"}}>Please type your name : </p>
+                <div style={{margin: "0 auto",marginTop:"10px" ,width: "max-content" ,border: "2px solid #ffffff" , borderRadius: "10px"}}>
+                    <Input onChange={(e) => {setName(e.target.value)}} style={{margin: "25px"}} placeholder={"Name"}/>
+                </div>
                 <p style={{fontSize: "2em", color: "white" , textAlign: "center"}}>Enter the Game Room id : </p>
 
                 <div style={{margin: "0 auto",marginTop:"100px" ,width: "max-content" ,border: "2px solid #ffffff" , borderRadius: "10px"}}>
