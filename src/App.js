@@ -1,7 +1,7 @@
 import './App.css';
 import Game from './components/Game/Game';
 import { io } from 'socket.io-client';
-import CopyIcon from './assets/copy.svg';
+// import CopyIcon from './assets/copy.svg';
 import PasteIcon from './assets/paste.png';
 
 import { useState } from 'react';
@@ -18,7 +18,12 @@ function App() {
   const [RoomId, setRoomId] = useState('');
   const [name, setName] = useState('');
   const [testState, settestState] = useState('');
-  const [RoomDetails, setRoomDetails]=useState({ RoomId: '', Player1: 'waiting for player to join', Player2: "waiting for player to join" })
+
+  const [RoomDetails, setRoomDetails] = useState({
+    RoomId: '',
+    Player1: 'waiting for player to join',
+    Player2: 'waiting for player to join',
+  });
 
   const [messages, setMessages] = useState([]);
 
@@ -30,42 +35,31 @@ function App() {
     setCreateJoin('create');
     socket = io('http://localhost:4000');
     socket.on('create-game', (room_id) => {
-        console.log(room_id);
-        socket.emit('join-game', room_id);
-        setRoomId(room_id);
-      });
-   
+      console.log(room_id);
+      socket.emit('join-game', room_id);
+      setRoomId(room_id);
+    });
   };
 
   const join = () => {
     socket = io('http://localhost:4000');
-    socket.emit('join-game', joinValue, name) 
-    socket.on('validate', (valid,roomDetails) => {
-
+    socket.emit('join-game', joinValue, name);
+    socket.on('validate', (valid, roomDetails) => {
       console.log(valid);
       if (valid) {
-        setRoomDetails(roomDetails)
+        setRoomDetails(roomDetails);
         onClose();
       } else {
         alert('Enter Valid Room ID');
       }
     });
   };
-  const startGame = async() => {
+  const startGame = async () => {
     socket.emit('create-game', name);
-    let flag = true
-    
-        await socket.on("validate",(valid,room)=>{
-            console.log("object");
-            if(room.Player2 !== ""){
-                setRoomDetails(room)
-                flag = false
-            }   
-        })
+    setRoomDetails({ ...RoomDetails, Player1: name });
 
-    
     onClose();
-  }
+  };
 
   const testfunc = () => {
     socket.emit('testvalue', testState, RoomId !== '' ? RoomId : joinValue);
@@ -138,7 +132,11 @@ function App() {
     try {
       socket.on('testvalue', (val) => {
         console.log(val);
-        setMessages([...messages, { message: val, role: 'reciever' }]);
+        if (val.hasOwnProperty('RoomId')) {
+          setRoomDetails(val);
+        } else {
+          setMessages([...messages, { message: val, role: 'reciever' }]);
+        }
       });
     } catch (e) {}
   };
@@ -199,6 +197,7 @@ function App() {
           <img
             style={{ display: 'inline-flex', verticalAlign: 'middle' }}
             src={PasteIcon}
+            alt=''
           />
         </div>
         <Button
@@ -317,13 +316,45 @@ function App() {
           </div>
           <Game />
           <div>
-             <div>
-             <p style={{padding: "0 50px 0 50px",fontSize: "2em", borderBottom: "5px solid" , textAlign: "center" ,  width: "max-content" , margin: "0 auto" , marginTop: "50px"}}>Score Board</p>
-              <div style={{display: "flex",justifyContent:"center"}}>
-                  <div style={{padding:"15px" , paddingRight: "50px",borderRight:"2px solid"}}>{RoomDetails.Player1}</div>
-                  <div style={{padding:"15px",paddingLeft: "50px",borderLeft:"2px solid"}}>{RoomDetails.Player2}</div>
+            <div style={{ width: 'max-content', margin: '0 auto' }}>
+              <div>
+                <p
+                  style={{
+                    padding: '0 50px 0 50px',
+                    fontSize: '2em',
+                    borderBottom: '5px solid',
+                    textAlign: 'center',
+                    width: 'max-content',
+                    margin: '0 auto',
+                    marginTop: '50px',
+                  }}
+                >
+                  Score Board
+                </p>
               </div>
-             </div>
+              <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <div
+                  style={{
+                    padding: '15px',
+                    width: '50%',
+                    textAlign: 'center',
+                    borderRight: '2px solid',
+                  }}
+                >
+                  {RoomDetails.Player1}
+                </div>
+                <div
+                  style={{
+                    padding: '15px',
+                    width: '50%',
+                    textAlign: 'center',
+                    borderLeft: '2px solid',
+                  }}
+                >
+                  {RoomDetails.Player2}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       )}
