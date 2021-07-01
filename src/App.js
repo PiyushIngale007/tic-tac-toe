@@ -1,70 +1,87 @@
-import './App.css';
-import Game from './components/Game/Game';
-import { io } from 'socket.io-client';
-// import CopyIcon from './assets/copy.svg';
-import PasteIcon from './assets/paste.png';
+import "./App.css";
+import Game from "./components/Game/Game";
+import { io } from "socket.io-client";
+import CopyIcon from "./assets/copy.svg";
+import PasteIcon from "./assets/paste.png";
 
-import { useState } from 'react';
-import Modal from 'react-modal';
-import { Card, CardContent, Input, Button } from '@material-ui/core';
-import CreateIcon from './assets/pen.png';
-import JoinIcon from './assets/link.png';
+import { useState } from "react";
+import Modal from "react-modal";
+import { Card, CardContent, Input, Button } from "@material-ui/core";
+import CreateIcon from "./assets/pen.png";
+import JoinIcon from "./assets/link.png";
 
-let socket = io('http://localhost:4000');
+let socket = io("http://localhost:4000");
 function App() {
   const [modalIsOpen, setIsOpen] = useState(true);
-  const [createJoin, setCreateJoin] = useState('');
-  const [joinValue, setJoinValue] = useState('');
-  const [RoomId, setRoomId] = useState('');
-  const [name, setName] = useState('');
-  const [testState, settestState] = useState('');
+  const [createJoin, setCreateJoin] = useState("");
+  const [joinValue, setJoinValue] = useState("");
+  const [RoomId, setRoomId] = useState("");
+  const [name, setName] = useState("");
+  const [testState, settestState] = useState("");
+  const [playerPiece, setPlayerPiece] = useState("");
 
   const [RoomDetails, setRoomDetails] = useState({
-    RoomId: '',
-    Player1: 'waiting for player to join',
-    Player2: 'waiting for player to join',
+    RoomId: "",
+    Player1: "waiting for player to join",
+    Player2: "waiting for player to join",
   });
 
   const [messages, setMessages] = useState([]);
+
+  function btn_clk(number) {
+    socket.emit("onDivClick", number, RoomDetails.RoomId, playerPiece);
+  }
+
+  const listen = () => {
+    socket.on("draw", (num, piece) => {
+      console.log(num, piece);
+    });
+  };
 
   const onClose = () => {
     setIsOpen(false);
   };
 
   const create = () => {
-    setCreateJoin('create');
-    socket = io('http://localhost:4000');
-    socket.on('create-game', (room_id) => {
+    setCreateJoin("create");
+    socket = io("http://localhost:4000");
+    socket.on("create-game", (room_id) => {
       console.log(room_id);
-      socket.emit('join-game', room_id);
+      socket.emit("join-game", room_id);
       setRoomId(room_id);
     });
+    setPlayerPiece(RoomDetails.Player1Piece);
+  };
+
+  const copykey = () => {
+    navigator.clipboard.writeText(RoomId);
   };
 
   const join = () => {
-    socket = io('http://localhost:4000');
-    socket.emit('join-game', joinValue, name);
-    socket.on('validate', (valid, roomDetails) => {
+    socket = io("http://localhost:4000");
+    socket.emit("join-game", joinValue, name);
+    socket.on("validate", (valid, roomDetails) => {
       console.log(valid);
       if (valid) {
         setRoomDetails(roomDetails);
         onClose();
       } else {
-        alert('Enter Valid Room ID');
+        alert("Enter Valid Room ID");
       }
+      setPlayerPiece(roomDetails.Player2Piece);
     });
   };
   const startGame = async () => {
-    socket.emit('create-game', name);
+    socket.emit("create-game", name);
     setRoomDetails({ ...RoomDetails, Player1: name });
 
     onClose();
   };
 
   const testfunc = () => {
-    socket.emit('testvalue', testState, RoomId !== '' ? RoomId : joinValue);
-    setMessages([...messages, { message: testState, role: 'sender' }]);
-    settestState('');
+    socket.emit("testvalue", testState, RoomId !== "" ? RoomId : joinValue);
+    setMessages([...messages, { message: testState, role: "sender" }]);
+    settestState("");
   };
 
   const CreateBtnClk = () => {
@@ -72,55 +89,68 @@ function App() {
       <div>
         <p
           style={{
-            fontFamily: 'Fira Sans',
-            fontSize: '2em',
-            color: 'white',
-            textAlign: 'center',
+            fontFamily: "Fira Sans",
+            fontSize: "2em",
+            color: "white",
+            textAlign: "center",
           }}
         >
           Create a Game
         </p>
-        <p style={{ fontSize: '2em', color: 'white', textAlign: 'center' }}>
-          Please type your name :{' '}
+        <p style={{ fontSize: "2em", color: "white", textAlign: "center" }}>
+          Please type your name :{" "}
         </p>
         <div
           style={{
-            margin: '0 auto',
-            marginTop: '10px',
-            width: 'max-content',
-            border: '2px solid #ffffff',
-            borderRadius: '10px',
+            margin: "0 auto",
+            marginTop: "10px",
+            width: "max-content",
+            border: "2px solid #ffffff",
+            borderRadius: "10px",
           }}
         >
           <Input
             onChange={(e) => {
               setName(e.target.value);
             }}
-            style={{ margin: '25px' }}
-            placeholder={'Name'}
+            style={{ margin: "25px" }}
+            placeholder={"Name"}
           />
         </div>
-        <p style={{ fontSize: '2em', color: 'white', textAlign: 'center' }}>
-          Your Game Room id is :{' '}
+        <p style={{ fontSize: "2em", color: "white", textAlign: "center" }}>
+          Your Game Room id is :{" "}
         </p>
-        <div className='id-div'>
+        <div className="id-div">
           <p
+            id="copyId"
             style={{
-              padding: '20px',
-              fontSize: '2em',
-              color: 'white',
-              textAlign: 'center',
+              paddingLeft: "20px",
+              paddingRight: "20px",
+              fontSize: "2em",
+              color: "white",
+              textAlign: "center",
             }}
           >
             {RoomId}
           </p>
-          {/* <img width="25px" style={{display: "inline-flex" , verticalAlign: "middle"}} src={CopyIcon}/> */}
+          <img
+            className="imgCopy"
+            onClick={copykey}
+            width="25px"
+            style={{ display: "inline-flex", verticalAlign: "middle" }}
+            src={CopyIcon}
+          />
         </div>
         <Button
           onClick={() => startGame()}
-          style={{ display: 'flex', margin: '0 auto', width: 'max-content' }}
-          variant='contained'
-          color='primary'
+          style={{
+            display: "flex",
+            margin: "0 auto",
+            marginTop: "50px",
+            width: "max-content",
+          }}
+          variant="contained"
+          color="primary"
         >
           Start Game
         </Button>
@@ -130,12 +160,13 @@ function App() {
 
   const display = () => {
     try {
-      socket.on('testvalue', (val) => {
+      socket.on("testvalue", (val) => {
         console.log(val);
-        if (val.hasOwnProperty('RoomId')) {
+        if (val.hasOwnProperty("RoomId")) {
           setRoomDetails(val);
+          setPlayerPiece(val.Player1Piece);
         } else {
-          setMessages([...messages, { message: val, role: 'reciever' }]);
+          setMessages([...messages, { message: val, role: "reciever" }]);
         }
       });
     } catch (e) {}
@@ -146,66 +177,65 @@ function App() {
       <div>
         <p
           style={{
-            fontFamily: 'Fira Sans',
-            fontSize: '2em',
-            color: 'white',
-            textAlign: 'center',
+            fontFamily: "Fira Sans",
+            fontSize: "2em",
+            color: "white",
+            textAlign: "center",
           }}
         >
           Join a Game
         </p>
-        <p style={{ fontSize: '2em', color: 'white', textAlign: 'center' }}>
-          Please type your name :{' '}
+        <p style={{ fontSize: "2em", color: "white", textAlign: "center" }}>
+          Please type your name :{" "}
         </p>
         <div
           style={{
-            margin: '0 auto',
-            marginTop: '10px',
-            width: 'max-content',
-            border: '2px solid #ffffff',
-            borderRadius: '10px',
+            margin: "0 auto",
+            marginTop: "10px",
+            width: "max-content",
+            border: "2px solid #ffffff",
+            borderRadius: "10px",
           }}
         >
           <Input
             onChange={(e) => {
               setName(e.target.value);
             }}
-            style={{ margin: '25px' }}
-            placeholder={'Name'}
+            style={{ margin: "25px" }}
+            placeholder={"Name"}
           />
         </div>
-        <p style={{ fontSize: '2em', color: 'white', textAlign: 'center' }}>
-          Enter the Game Room id :{' '}
+        <p style={{ fontSize: "2em", color: "white", textAlign: "center" }}>
+          Enter the Game Room id :{" "}
         </p>
 
         <div
           style={{
-            margin: '0 auto',
-            marginTop: '100px',
-            width: 'max-content',
-            border: '2px solid #ffffff',
-            borderRadius: '10px',
+            margin: "0 auto",
+            marginTop: "100px",
+            width: "max-content",
+            border: "2px solid #ffffff",
+            borderRadius: "10px",
           }}
         >
           <Input
             onChange={(e) => {
               setJoinValue(e.target.value);
             }}
-            style={{ margin: '25px' }}
-            placeholder={'ROOM ID'}
+            style={{ margin: "25px" }}
+            placeholder={"ROOM ID"}
           />
           <img
-            style={{ display: 'inline-flex', verticalAlign: 'middle' }}
+            style={{ display: "inline-flex", verticalAlign: "middle" }}
             src={PasteIcon}
-            alt=''
+            alt=""
           />
         </div>
         <Button
           onClick={join}
-          style={{ display: 'flex', margin: '0 auto', width: 'max-content' }}
-          variant='contained'
-          color='primary'
-          href='#contained-buttons'
+          style={{ display: "flex", margin: "0 auto", width: "max-content" }}
+          variant="contained"
+          color="primary"
         >
           Check ID
         </Button>
@@ -215,48 +245,48 @@ function App() {
   return (
     <div>
       {modalIsOpen ? (
-        <div className='modal-div'>
+        <div className="modal-div">
           <Modal
-            style={{ backgroundColor: '#3C3F41' }}
+            style={{ backgroundColor: "#3C3F41" }}
             ariaHideApp={false}
             isOpen={modalIsOpen}
             onClose={onClose}
           >
-            {createJoin === '' ? (
+            {createJoin === "" ? (
               <div>
                 <p
                   style={{
-                    fontSize: '2em',
-                    color: 'white',
-                    textAlign: 'center',
+                    fontSize: "2em",
+                    color: "white",
+                    textAlign: "center",
                   }}
                 >
                   Tic Tac Toe
                 </p>
-                <div className='modal-cards'>
-                  <Card onClick={create} className='card'>
+                <div className="modal-cards">
+                  <Card onClick={create} className="card">
                     <CardContent>
                       <div>
-                        <img className='img' src={CreateIcon} alt={''} />
+                        <img className="img" src={CreateIcon} alt={""} />
                       </div>
-                      <div className='text'>
+                      <div className="text">
                         <p>Create a Game</p>
                       </div>
                     </CardContent>
                   </Card>
-                  <Card onClick={() => setCreateJoin('join')} className='card'>
+                  <Card onClick={() => setCreateJoin("join")} className="card">
                     <CardContent>
                       <div>
-                        <img className='img' src={JoinIcon} alt={''} />
+                        <img className="img" src={JoinIcon} alt={""} />
                       </div>
-                      <div className='text'>
+                      <div className="text">
                         <p>Join a Game</p>
                       </div>
                     </CardContent>
                   </Card>
                 </div>
               </div>
-            ) : createJoin === 'create' ? (
+            ) : createJoin === "create" ? (
               CreateBtnClk()
             ) : (
               JoinBtnClk()
@@ -265,7 +295,7 @@ function App() {
         </div>
       ) : (
         <div>
-          <header className='App-header'>
+          <header className="App-header">
             <p>Tic Tac Toe Multiplayer</p>
           </header>
           <Input
@@ -277,22 +307,23 @@ function App() {
           <Button onClick={testfunc}>Send</Button>
           <div
             style={{
-              width: '80%',
-              margin: '0 auto',
-              backgroundColor: 'antiquewhite',
+              width: "80%",
+              margin: "0 auto",
+              backgroundColor: "antiquewhite",
             }}
           >
             {display()}
+            {listen()}
             {messages.map((message, index) => {
-              if (message.role === 'sender') {
+              if (message.role === "sender") {
                 return (
                   <p
                     style={{
-                      padding: '15px',
-                      margin: '5px',
-                      border: '2px solid',
+                      padding: "15px",
+                      margin: "5px",
+                      border: "2px solid",
                     }}
-                    key={'p' + index}
+                    key={"p" + index}
                   >
                     {message.message}
                   </p>
@@ -301,12 +332,12 @@ function App() {
                 return (
                   <p
                     style={{
-                      textAlign: 'right',
-                      padding: '15px',
-                      margin: '5px',
-                      border: '2px solid',
+                      textAlign: "right",
+                      padding: "15px",
+                      margin: "5px",
+                      border: "2px solid",
                     }}
-                    key={'p' + index}
+                    key={"p" + index}
                   >
                     {message.message}
                   </p>
@@ -314,41 +345,46 @@ function App() {
               }
             })}
           </div>
-          <Game />
+          <Game
+            roomDetails={RoomDetails}
+            socket={socket}
+            func={(num) => btn_clk(num)}
+            func1={() => listen()}
+          />
           <div>
-            <div style={{ width: 'max-content', margin: '0 auto' }}>
+            <div style={{ width: "max-content", margin: "0 auto" }}>
               <div>
                 <p
                   style={{
-                    padding: '0 50px 0 50px',
-                    fontSize: '2em',
-                    borderBottom: '5px solid',
-                    textAlign: 'center',
-                    width: 'max-content',
-                    margin: '0 auto',
-                    marginTop: '50px',
+                    padding: "0 50px 0 50px",
+                    fontSize: "2em",
+                    borderBottom: "5px solid",
+                    textAlign: "center",
+                    width: "max-content",
+                    margin: "0 auto",
+                    marginTop: "50px",
                   }}
                 >
                   Score Board
                 </p>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <div style={{ display: "flex", justifyContent: "center" }}>
                 <div
                   style={{
-                    padding: '15px',
-                    width: '50%',
-                    textAlign: 'center',
-                    borderRight: '2px solid',
+                    padding: "15px",
+                    width: "50%",
+                    textAlign: "center",
+                    borderRight: "2px solid",
                   }}
                 >
                   {RoomDetails.Player1}
                 </div>
                 <div
                   style={{
-                    padding: '15px',
-                    width: '50%',
-                    textAlign: 'center',
-                    borderLeft: '2px solid',
+                    padding: "15px",
+                    width: "50%",
+                    textAlign: "center",
+                    borderLeft: "2px solid",
                   }}
                 >
                   {RoomDetails.Player2}

@@ -1,82 +1,88 @@
 .App-header {
-    background-color: #282c34;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+  background-color: #282c34;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
 }
 
 .ReactModal__Content {
-    background-color: #3C3F41 !important;
-    border-radius: 20px !important;
+  background-color: #3c3f41 !important;
+  border-radius: 20px !important;
 }
 
 .id-div {
-    background-color: rgba(150, 245, 64, 0.26);
-    text-align: center;
-    border-radius: 25px;
-    width: 80%;
-    margin: 0 auto;
+  background-color: rgba(150, 245, 64, 0.26);
+  text-align: center;
+  border-radius: 25px;
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+.imgCopy:hover {
+  cursor: pointer;
 }
 
 .MuiInput-underline:before {
-    border-bottom: 2px solid aliceblue !important;
+  border-bottom: 2px solid aliceblue !important;
 }
 .MuiInput-underline:after {
-    border-bottom: 2px solid orange !important;
+  border-bottom: 2px solid orange !important;
 }
 .MuiInputBase-root {
-    color: aqua !important
+  color: aqua !important;
 }
 .MuiInputBase-input {
-    text-align: center !important;
-    font-size: x-large !important;
+  text-align: center !important;
+  font-size: x-large !important;
 }
 
 .MuiPaper-rounded {
-    border-radius: 18px !important;
+  border-radius: 18px !important;
 }
 
 .card {
-    margin: 50px;
-    min-width: min-content;
-    border-radius: 20px;
+  margin: 50px;
+  min-width: min-content;
+  border-radius: 20px;
 }
 
 .card:hover {
-    cursor: pointer;
-    background-color: #46fcde;
+  cursor: pointer;
+  background-color: #46fcde;
 }
 
 .modal-cards {
-    display: flex;
-    justify-content: center;
-    margin: 20px;
+  display: flex;
+  justify-content: center;
+  margin: 20px;
 }
 
 .img {
-    height: auto;
-    padding: 50px;
-    width: 200px;
-    display: block;
-    min-width: 50px;
+  height: auto;
+  padding: 50px;
+  width: 200px;
+  display: block;
+  min-width: 50px;
 }
 
 .text {
-    text-align: center;
-    font-size: 2em;
+  text-align: center;
+  font-size: 2em;
 }
 
 @media (max-width: 700px) {
-    .card {
-        margin: 50px;
-        min-width: min-content;
-    }
+  .card {
+    margin: 50px;
+    min-width: min-content;
+  }
 
-    .modal-cards {
-        display: grid;
-        justify-content: center;
-        margin: 20px
-    }
+  .modal-cards {
+    display: grid;
+    justify-content: center;
+    margin: 20px;
+  }
 }
