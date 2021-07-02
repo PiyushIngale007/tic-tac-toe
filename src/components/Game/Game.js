@@ -1,22 +1,20 @@
-import React from "react";
-import "./Game.css";
-import X from "./X";
-import O from "./O";
+import React from 'react';
+import './Game.css';
+import X from './X';
+import O from './O';
 
 function Game(props) {
-  const moves = ["", "", "", "", "", "", "", "", ""];
-
   return (
     <div
       style={{
-        display: "grid",
-        gridTemplateColumns: "auto auto auto",
-        justifyContent: "center",
-        alignContent: "center",
+        display: 'grid',
+        gridTemplateColumns: 'auto auto auto',
+        justifyContent: 'center',
+        alignContent: 'center',
       }}
     >
       {props.func1()}
-      {console.log("object")}
+      {console.log('object')}
       {/* <div onClick={() => props.func(1)} id="1" className="btn placeHolder">
         <X />
       </div>
@@ -32,22 +30,22 @@ function Game(props) {
       <div onClick={() => props.func(9)} id="9" className="btn"></div> */}
 
       {props.moves.map((move, index) => {
-        if (move === "") {
+        if (move === '') {
           return (
             <div
               onClick={() => props.func(index + 1)}
               id={index + 1}
-              className="btn"
-              key={index + "1"}
+              className='btn'
+              key={index + '1'}
             ></div>
           );
-        } else if (move === "X") {
+        } else if (move === 'X') {
           return (
             <div
               onClick={() => props.func(index + 1)}
               id={index + 1}
-              key={index + "1"}
-              className="btn"
+              key={index + '1'}
+              className='btn'
             >
               <X />
             </div>
@@ -57,8 +55,8 @@ function Game(props) {
             <div
               onClick={() => props.func(index + 1)}
               id={index + 1}
-              key={index + "1"}
-              className="btn"
+              key={index + '1'}
+              className='btn'
             >
               <O />
             </div>
