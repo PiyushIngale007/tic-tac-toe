@@ -4,7 +4,7 @@ import { io } from "socket.io-client";
 import CopyIcon from "./assets/copy.svg";
 import PasteIcon from "./assets/paste.png";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { Card, CardContent, Input, Button } from "@material-ui/core";
 import CreateIcon from "./assets/pen.png";
@@ -29,6 +29,13 @@ function App() {
   });
 
   const [messages, setMessages] = useState([]);
+
+  useEffect(() => {
+    return () => {
+      socket.emit("disconnecting", RoomId);
+      socket.disconnect();
+    };
+  }, []);
 
   function btn_clk(number) {
     socket.emit("onDivClick", number, RoomDetails.RoomId, playerPiece);
@@ -92,9 +99,10 @@ function App() {
   };
 
   const pastekey = () => {
-    navigator.clipboard
-      .readText()
-      .then((text) => (document.getElementById("paste").value = text));
+    navigator.clipboard.readText().then((text) => {
+      document.getElementById("paste").value = text;
+      setJoinValue(document.getElementById("paste").value);
+    });
   };
 
   const join = () => {
