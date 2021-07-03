@@ -66,7 +66,6 @@ function App() {
     });
     marked.push(number);
   }
-  let result = "";
 
   const listen = () => {
     socket.on("draw", (num, piece, details) => {
@@ -97,7 +96,7 @@ function App() {
     socket.on("result", (name) => {
       console.log(name);
 
-      result = name;
+      document.getElementById("res").innerText = name + " Won";
 
       const els = document.getElementsByClassName("btn");
       Array.prototype.forEach.call(els, function (el) {
@@ -380,7 +379,7 @@ function App() {
           <header className="App-header">
             <p>Tic Tac Toe Multiplayer</p>
           </header>
-          <p>{result}</p>
+          <p id="res" style={{ color: "#ffffff", textAlign: "center" }}></p>
           <Input
             value={testState}
             onChange={(e) => {
