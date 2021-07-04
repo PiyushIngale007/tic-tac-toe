@@ -4,7 +4,7 @@ import { io } from "socket.io-client";
 import CopyIcon from "./assets/copy.svg";
 import PasteIcon from "./assets/paste.png";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Modal from "react-modal";
 import { Card, CardContent, Input, Button } from "@material-ui/core";
 import CreateIcon from "./assets/pen.png";
@@ -12,6 +12,7 @@ import JoinIcon from "./assets/link.png";
 
 let socket = io("http://localhost:4000");
 let marked = [];
+
 function App() {
   const [modalIsOpen, setIsOpen] = useState(true);
   const [createJoin, setCreateJoin] = useState("");
@@ -30,15 +31,27 @@ function App() {
 
   const [messages, setMessages] = useState([]);
 
+  const componentWillUnmount = useRef(false);
+
+  // This is componentWillUnmount
   useEffect(() => {
     return () => {
-      socket.emit("disconnecting", RoomId);
-      socket.disconnect();
+      componentWillUnmount.current = true;
     };
   }, []);
 
+  useEffect(() => {
+    return () => {
+      // This line only evaluates to true after the componentWillUnmount happens
+      if (componentWillUnmount.current) {
+        socket.emit("disconnecting1", RoomId);
+        socket.disconnect();
+      }
+    };
+  }, [RoomId]);
+
   function btn_clk(number) {
-    socket.emit("onDivClick", number, RoomDetails.RoomId, playerPiece);
+    socket.emit("onDivClick", number, RoomDetails, playerPiece);
     document.getElementById(number).style.pointerEvents = "none";
 
     const newMoves = [...moves];
@@ -55,11 +68,12 @@ function App() {
   }
 
   const listen = () => {
-    socket.on("draw", (num, piece) => {
+    socket.on("draw", (num, piece, details) => {
       const newMoves = [...moves]; //copy the array
       newMoves[num - 1] = piece; //execute the manipulations
 
       setMoves(newMoves);
+      setRoomDetails(details);
       if (!marked.includes(num)) {
         marked.push(num);
       }
@@ -77,6 +91,19 @@ function App() {
       });
       socket.off("draw");
       // document.getElementsByClassName('btn').style.pointerEvents = 'auto';
+    });
+
+    socket.on("result", (name) => {
+      console.log(name);
+
+      document.getElementById("res").innerText = name + " Won";
+
+      const els = document.getElementsByClassName("btn");
+      Array.prototype.forEach.call(els, function (el) {
+        // Do stuff here
+        el.style.pointerEvents = "none";
+      });
+      socket.off("result");
     });
   };
 
@@ -352,6 +379,7 @@ function App() {
           <header className="App-header">
             <p>Tic Tac Toe Multiplayer</p>
           </header>
+          <p id="res" style={{ color: "#ffffff", textAlign: "center" }}></p>
           <Input
             value={testState}
             onChange={(e) => {
