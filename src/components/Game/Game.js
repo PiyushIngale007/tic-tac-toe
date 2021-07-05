@@ -13,7 +13,6 @@ function Game(props) {
         alignContent: 'center',
       }}
     >
-      {props.func1()}
       {console.log('object')}
       {/* <div onClick={() => props.func(1)} id="1" className="btn placeHolder">
         <X />
@@ -35,9 +34,17 @@ function Game(props) {
             <div
               onClick={() => props.func(index + 1)}
               id={index + 1}
-              className='btn'
+              className='btn '
               key={index + '1'}
-            ></div>
+            >
+              <div className='placeholder'>
+                {props.playerPiece === 'X' && !props.result ? (
+                  <X />
+                ) : props.playerPiece === 'O' && !props.result ? (
+                  <O />
+                ) : null}
+              </div>
+            </div>
           );
         } else if (move === 'X') {
           return (

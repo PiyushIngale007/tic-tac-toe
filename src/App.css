@@ -74,6 +74,33 @@
   font-size: 2em;
 }
 
+
+
+
+.nameInput{
+  margin: 0 auto;
+  margin-top: 10px;
+  width: max-content;
+  border: 2px solid #ffffff;
+  border-radius: 10px;
+}
+
+.gameContainer{
+  display: flex;
+}
+
+.gameOuter{
+  width: 50%;
+}
+
+.messagesContainer{
+  width: 50%;
+}
+
+.messageInput{
+  width: 80%;
+}
+
 @media (max-width: 700px) {
   .card {
     margin: 50px;
@@ -85,4 +112,31 @@
     justify-content: center;
     margin: 20px;
   }
+  .MuiCardContent-root:last-child {
+    padding-bottom: 0px !important;
+}
+.MuiCardContent-root {
+    padding: 0px !important;
+}
+
+.nameInput{
+  margin: 0 auto;
+  margin-top: 10px;
+  width:auto;
+  border: 2px solid #ffffff;
+  border-radius: 10px;
+}
+
+.gameContainer{
+  display: unset;
+}
+.gameOuter{
+  width: 100%;
+}
+
+.messagesContainer{
+  width: 100%;
+}
+
+
 }
