@@ -6,7 +6,8 @@ const beforeStyle = {
   height: "90%",
   position: "absolute",
   borderRadius: "50%",
-  left: "5px",
+  left: "8px",
+  top: "8px",
   // transform: 'rotate(45deg)'
 };
 const afterStyle = {
@@ -15,8 +16,8 @@ const afterStyle = {
   height: "70%",
   position: "absolute",
   borderRadius: "50%",
-  left: "15px",
-  top: "10px",
+  left: "23px",
+  top: "23px",
   // transform: 'rotate(45deg)'
 };
 

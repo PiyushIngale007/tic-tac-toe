@@ -74,10 +74,7 @@
   font-size: 2em;
 }
 
-
-
-
-.nameInput{
+.nameInput {
   margin: 0 auto;
   margin-top: 10px;
   width: max-content;
@@ -85,19 +82,22 @@
   border-radius: 10px;
 }
 
-.gameContainer{
+.gameContainer {
   display: flex;
 }
 
-.gameOuter{
+.gameOuter {
   width: 50%;
 }
 
-.messagesContainer{
+.messagesContainer {
   width: 50%;
+  background-color: blueviolet !important;
+  border-radius: 20px;
+  margin-right: 40px;
 }
 
-.messageInput{
+.messageInput {
   width: 80%;
 }
 
@@ -114,29 +114,27 @@
   }
   .MuiCardContent-root:last-child {
     padding-bottom: 0px !important;
-}
-.MuiCardContent-root {
+  }
+  .MuiCardContent-root {
     padding: 0px !important;
-}
+  }
 
-.nameInput{
-  margin: 0 auto;
-  margin-top: 10px;
-  width:auto;
-  border: 2px solid #ffffff;
-  border-radius: 10px;
-}
+  .nameInput {
+    margin: 0 auto;
+    margin-top: 10px;
+    width: auto;
+    border: 2px solid #ffffff;
+    border-radius: 10px;
+  }
 
-.gameContainer{
-  display: unset;
-}
-.gameOuter{
-  width: 100%;
-}
+  .gameContainer {
+    display: unset;
+  }
+  .gameOuter {
+    width: 100%;
+  }
 
-.messagesContainer{
-  width: 100%;
-}
-
-
+  .messagesContainer {
+    width: 100%;
+  }
 }

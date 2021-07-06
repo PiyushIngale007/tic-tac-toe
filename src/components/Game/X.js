@@ -6,8 +6,8 @@ const beforeStyle = {
   height: "13%",
   position: "absolute",
   transform: "rotate(45deg)",
-  top: "42px",
-  left: "4px",
+  top: "70px",
+  left: "8px",
 };
 const afterStyle = {
   background: "white",
@@ -15,8 +15,8 @@ const afterStyle = {
   height: "13%",
   position: "absolute",
   transform: "rotate(-45deg)",
-  top: "42px",
-  left: "4px",
+  top: "70px",
+  left: "8px",
 };
 
 const X = () => {
