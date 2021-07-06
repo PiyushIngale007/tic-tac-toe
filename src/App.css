@@ -84,11 +84,16 @@
 
 .gameContainer {
   display: flex;
+  margin: 35px 0px;
 }
 
 .gameOuter {
   width: 50%;
 }
+
+/* .innermessagesContainer::-webkit-scrollbar {
+  width: 0 !important;
+} */
 
 .messagesContainer {
   width: 50%;

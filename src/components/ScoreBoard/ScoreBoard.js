@@ -9,7 +9,13 @@ const ScoreBoard = (props) => {
   return (
     <div className="mainDiv">
       <p
-        style={{ color: "yellowgreen", padding: "10px", fontSize: "xx-large" }}
+        style={{
+          color: "yellowgreen",
+          padding: "10px",
+          fontSize: "xx-large",
+          margin: "0",
+          fontFamily: "Otomanopee One",
+        }}
       >
         ScoreBoard
       </p>
@@ -20,7 +26,9 @@ const ScoreBoard = (props) => {
             <CardActionArea>
               <CardContent>
                 <Typography gutterBottom variant="h5" component="h2">
-                  {props.details.Player1}
+                  <p style={{ fontFamily: "Otomanopee One", margin: "0" }}>
+                    {props.details.Player1}
+                  </p>
                 </Typography>
                 <Typography variant="body2" color="textSecondary" component="p">
                   {props.details.Player1Score}
@@ -34,7 +42,9 @@ const ScoreBoard = (props) => {
             <CardActionArea>
               <CardContent>
                 <Typography gutterBottom variant="h5" component="h2">
-                  {props.details.Player2}
+                  <p style={{ fontFamily: "Otomanopee One", margin: "0" }}>
+                    {props.details.Player2}
+                  </p>
                 </Typography>
                 <Typography variant="body2" color="textSecondary" component="p">
                   {props.details.Player2Score}

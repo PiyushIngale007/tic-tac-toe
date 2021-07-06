@@ -26,8 +26,8 @@ function App() {
   const [results, setResults] = useState(false);
   const [RoomDetails, setRoomDetails] = useState({
     RoomId: "",
-    Player1: "waiting for player to join",
-    Player2: "waiting for player to join",
+    Player1: "Waiting",
+    Player2: "Waiting",
     Player1Score: 0,
     Player2Score: 0,
   });
@@ -36,7 +36,11 @@ function App() {
 
   const componentWillUnmount = useRef(false);
 
-  // This is componentWillUnmount
+  try {
+    var objDiv = document.getElementById("innermessagesContainer");
+    objDiv.scrollIntoView();
+  } catch (error) {}
+
   useEffect(() => {
     return () => {
       componentWillUnmount.current = true;
@@ -227,7 +231,7 @@ function App() {
       <div>
         <p
           style={{
-            fontFamily: "Fira Sans",
+            fontFamily: "Otomanopee One",
             fontSize: "2em",
             color: "white",
             textAlign: "center",
@@ -401,6 +405,7 @@ function App() {
                     fontSize: "2em",
                     color: "white",
                     textAlign: "center",
+                    fontFamily: "Otomanopee One",
                   }}
                 >
                   Tic Tac Toe
@@ -438,7 +443,9 @@ function App() {
       ) : (
         <div>
           <header className="App-header">
-            <p>Tic Tac Toe Multiplayer</p>
+            <p style={{ fontFamily: "Otomanopee One" }}>
+              Tic Tac Toe Multiplayer
+            </p>
           </header>
           <p id="res" style={{ color: "#ffffff", textAlign: "center" }}></p>
 
@@ -454,6 +461,8 @@ function App() {
             </div>
             <div className="messagesContainer">
               <div
+                className="innermessagesContainer"
+                id="innermessagesContainer"
                 style={{
                   width: "95%",
                   height: "440px",
