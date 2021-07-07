@@ -80,6 +80,14 @@ function App() {
   });
 
   useEffect(() => {
+    if (messages.length !== 0) {
+      document
+        .getElementById('innermessagesContainer')
+        .lastChild.scrollIntoView(false);
+    }
+  }, [messages]);
+
+  useEffect(() => {
     return () => {
       // This line only evaluates to true after the componentWillUnmount happens
       if (componentWillUnmount.current) {
