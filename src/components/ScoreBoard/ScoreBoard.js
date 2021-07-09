@@ -31,7 +31,9 @@ const ScoreBoard = (props) => {
                   </p>
                 </Typography>
                 <Typography variant="body2" color="textSecondary" component="p">
-                  {props.details.Player1Score}
+                  <p style={{ margin: "0", fontSize: "1.875rem" }}>
+                    {props.details.Player1Score}
+                  </p>
                 </Typography>
               </CardContent>
             </CardActionArea>
@@ -47,7 +49,9 @@ const ScoreBoard = (props) => {
                   </p>
                 </Typography>
                 <Typography variant="body2" color="textSecondary" component="p">
-                  {props.details.Player2Score}
+                  <p style={{ margin: "0", fontSize: "1.875rem" }}>
+                    {props.details.Player1Score}
+                  </p>
                 </Typography>
               </CardContent>
             </CardActionArea>

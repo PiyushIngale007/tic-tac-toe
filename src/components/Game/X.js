@@ -1,7 +1,7 @@
 import React from "react";
 
 const beforeStyle = {
-  background: "white",
+  background: "#19fe62",
   width: "93%",
   height: "13%",
   position: "absolute",
@@ -10,7 +10,7 @@ const beforeStyle = {
   left: "8px",
 };
 const afterStyle = {
-  background: "white",
+  background: "#19fe62",
   width: "93%",
   height: "13%",
   position: "absolute",
