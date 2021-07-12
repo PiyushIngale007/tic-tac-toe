@@ -35,7 +35,7 @@
   opacity: 0.3;
 }
 
-.beforeX{
+.beforeX {
   background: #fbe57d;
   width: 93%;
   height: 13%;
@@ -45,7 +45,7 @@
   left: 8px;
 }
 
-.afterX{
+.afterX {
   background: #fbe57d;
   width: 93%;
   height: 13%;
@@ -55,17 +55,17 @@
   left: 8px;
 }
 
-.beforeO{
+.beforeO {
   background: #8ac3ed;
-width: 90%;
-height: 90%;
-position: absolute;
-border-radius: 50%;
-left: 8px;
-top: 8px;
+  width: 90%;
+  height: 90%;
+  position: absolute;
+  border-radius: 50%;
+  left: 8px;
+  top: 8px;
 }
 
-.afterO{
+.afterO {
   background: #252526;
   width: 70%;
   height: 70%;
@@ -75,9 +75,6 @@ top: 8px;
   top: 23px;
 }
 
-
-
-
 @media (max-width: 700px) {
   .btn {
     height: 8rem;
@@ -86,7 +83,7 @@ top: 8px;
     position: relative;
   }
 
-  .beforeX{
+  .beforeX {
     background: #fbe57d;
     width: 93%;
     height: 13%;
@@ -95,8 +92,8 @@ top: 8px;
     top: 57px;
     left: 6px;
   }
-  
-  .afterX{
+
+  .afterX {
     background: #fbe57d;
     width: 93%;
     height: 13%;
@@ -106,17 +103,17 @@ top: 8px;
     left: 6px;
   }
 
-  .beforeO{
+  .beforeO {
     background: #8ac3ed;
-  width: 90%;
-  height: 90%;
-  position: absolute;
-  border-radius: 50%;
-  left: 7px;
-  top: 7px;
+    width: 90%;
+    height: 90%;
+    position: absolute;
+    border-radius: 50%;
+    left: 7px;
+    top: 7px;
   }
-  
-  .afterO{
+
+  .afterO {
     background: #252526;
     width: 70%;
     height: 70%;
@@ -125,5 +122,4 @@ top: 8px;
     left: 20px;
     top: 20px;
   }
-  
 }
