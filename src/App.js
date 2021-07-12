@@ -34,6 +34,8 @@ function App() {
 
   const [messages, setMessages] = useState([]);
 
+  const [status, setStatus] = useState('Waiting');
+
   const componentWillUnmount = useRef(false);
 
   try {
@@ -69,15 +71,27 @@ function App() {
 
           el.style.pointerEvents = 'auto';
         });
+        setStatus('Your turn');
       } else {
         const els = document.getElementsByClassName('btn');
         Array.prototype.forEach.call(els, function (el) {
           // Do stuff here
           el.style.pointerEvents = 'none';
         });
+        setStatus(
+          RoomDetails.Player1Piece === 'X'
+            ? RoomDetails.Player1 + "'s turn"
+            : RoomDetails.Player2 + "'s turn"
+        );
       }
     }
-  });
+  }, [
+    moves,
+    playerPiece,
+    RoomDetails.Player1Piece,
+    RoomDetails.Player1,
+    RoomDetails.Player2,
+  ]);
 
   useEffect(() => {
     if (messages.length !== 0) {
@@ -107,6 +121,12 @@ function App() {
 
       setMoves(newMoves);
 
+      setStatus(
+        playerPiece === RoomDetails.Player1Piece
+          ? RoomDetails.Player2 + "'s turn"
+          : RoomDetails.Player1 + "'s turn"
+      );
+
       const els = document.getElementsByClassName('btn');
       Array.prototype.forEach.call(els, function (el) {
         // Do stuff here
@@ -131,11 +151,14 @@ function App() {
         socket.off('scoreUpdate');
       });
 
+      socket.off('draw');
       socket.on('draw', (num, piece, details) => {
         const newMoves = [...moves]; //copy the array
         newMoves[num - 1] = piece; //execute the manipulations
 
         setMoves(newMoves);
+        setStatus('Your turn');
+
         setRoomDetails(details);
         if (!marked.includes(num)) {
           marked.push(num);
@@ -160,7 +183,7 @@ function App() {
     socket.on('result', (name) => {
       console.log(name);
 
-      document.getElementById('res').innerText = name + ' Won';
+      setStatus(name === 'Draw' ? 'Match is draw' : name + ' is a winnner');
       setResults(true);
       const els = document.getElementsByClassName('btn');
       Array.prototype.forEach.call(els, function (el) {
@@ -487,7 +510,16 @@ function App() {
               Tic Tac Toe Multiplayer
             </p>
           </header>
-          <p id='res' style={{ color: '#ffffff', textAlign: 'center' }}></p>
+          <div
+            style={{
+              textAlign: 'center',
+              color: 'aliceblue',
+              fontFamily: 'Otomanopee One',
+              fontSize: 'xx-large',
+            }}
+          >
+            {status}
+          </div>
 
           <div className='gameContainer'>
             <div className='gameOuter'>

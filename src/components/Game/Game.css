@@ -1,7 +1,7 @@
 .btn {
   height: 10rem;
   width: 10rem;
-  border: 4px solid wheat;
+  border: 4px solid #635b55;
   position: relative;
 }
 .btn:first-child,
@@ -33,4 +33,97 @@
 }
 .placeholder:hover {
   opacity: 0.3;
+}
+
+.beforeX{
+  background: #fbe57d;
+  width: 93%;
+  height: 13%;
+  position: absolute;
+  transform: rotate(45deg);
+  top: 70px;
+  left: 8px;
+}
+
+.afterX{
+  background: #fbe57d;
+  width: 93%;
+  height: 13%;
+  position: absolute;
+  transform: rotate(-45deg);
+  top: 70px;
+  left: 8px;
+}
+
+.beforeO{
+  background: #8ac3ed;
+width: 90%;
+height: 90%;
+position: absolute;
+border-radius: 50%;
+left: 8px;
+top: 8px;
+}
+
+.afterO{
+  background: #252526;
+  width: 70%;
+  height: 70%;
+  position: absolute;
+  border-radius: 50%;
+  left: 23px;
+  top: 23px;
+}
+
+
+
+
+@media (max-width: 700px) {
+  .btn {
+    height: 8rem;
+    width: 8rem;
+    border: 4px solid #635b55;
+    position: relative;
+  }
+
+  .beforeX{
+    background: #fbe57d;
+    width: 93%;
+    height: 13%;
+    position: absolute;
+    transform: rotate(45deg);
+    top: 57px;
+    left: 6px;
+  }
+  
+  .afterX{
+    background: #fbe57d;
+    width: 93%;
+    height: 13%;
+    position: absolute;
+    transform: rotate(-45deg);
+    top: 57px;
+    left: 6px;
+  }
+
+  .beforeO{
+    background: #8ac3ed;
+  width: 90%;
+  height: 90%;
+  position: absolute;
+  border-radius: 50%;
+  left: 7px;
+  top: 7px;
+  }
+  
+  .afterO{
+    background: #252526;
+    width: 70%;
+    height: 70%;
+    position: absolute;
+    border-radius: 50%;
+    left: 20px;
+    top: 20px;
+  }
+  
 }
