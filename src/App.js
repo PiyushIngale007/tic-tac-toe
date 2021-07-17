@@ -7,9 +7,12 @@ import PasteIcon from "./assets/paste.png";
 import { useEffect, useState, useRef } from "react";
 import Modal from "react-modal";
 import { Card, CardContent, Input, Button } from "@material-ui/core";
+import Fab from "@material-ui/core/Fab";
+import ChatIcon from "@material-ui/icons/Chat";
 import CreateIcon from "./assets/pen.png";
 import JoinIcon from "./assets/link.png";
 import ScoreBoard from "./components/ScoreBoard/ScoreBoard";
+import ChatComponent from "./components/Chat/ChatComponent";
 
 let socket = io("http://localhost:5000");
 let marked = [];
@@ -93,13 +96,13 @@ function App() {
     RoomDetails.Player2,
   ]);
 
-  useEffect(() => {
-    if (messages.length !== 0) {
-      document
-        .getElementById("innermessagesContainer")
-        .lastChild.scrollIntoView(false);
-    }
-  }, [messages]);
+  // useEffect(() => {
+  //   if (messages.length !== 0) {
+  //     document
+  //       .getElementById("innermessagesContainer")
+  //       .lastChild.scrollIntoView(false);
+  //   }
+  // }, [messages]);
 
   useEffect(() => {
     return () => {
@@ -268,9 +271,10 @@ function App() {
     onClose();
   };
 
-  const testfunc = () => {
-    socket.emit("testvalue", testState, RoomId !== "" ? RoomId : joinValue);
-    setMessages([...messages, { message: testState, role: "sender" }]);
+  const testfunc = (message1) => {
+    console.log(message1);
+    socket.emit("testvalue", message1, RoomId !== "" ? RoomId : joinValue);
+    setMessages([...messages, { message: message1, role: "sender" }]);
     settestState("");
   };
 
@@ -378,6 +382,7 @@ function App() {
           // }
           flag = false;
         } else {
+          settestState(val);
           socket.off("testvalue");
           setMessages([...messages, { message: val, role: "reciever" }]);
         }
@@ -453,6 +458,8 @@ function App() {
   };
   return (
     <div>
+      {display()}
+      {listen()}
       {modalIsOpen ? (
         <div className="modal-div">
           <Modal
@@ -511,6 +518,7 @@ function App() {
             </p>
           </header>
           <div
+            className="status"
             style={{
               textAlign: "center",
               color: "aliceblue",
@@ -531,7 +539,12 @@ function App() {
                 result={results}
               />
             </div>
-            <div className="messagesContainer">
+            <ChatComponent
+              mvalue={testState}
+              RoomId={RoomDetails.RoomId}
+              joinValue={joinValue}
+            />
+            {/* <div className="messagesContainer">
               <div
                 className="innermessagesContainer"
                 id="innermessagesContainer"
@@ -543,8 +556,6 @@ function App() {
                   // backgroundColor: 'antiquewhite',
                 }}
               >
-                {display()}
-                {listen()}
                 {messages.map((message, index) => {
                   if (message.role === "reciever") {
                     return (
@@ -596,16 +607,19 @@ function App() {
                 ></Input>
                 <Button onClick={testfunc}>Send</Button>
               </div>
-            </div>
+            </div> */}
           </div>
           {results ? (
-            <div>
+            <div style={{ textAlign: "center", marginBottom: "20px" }}>
               <Button onClick={playAgain} variant="contained" color="secondary">
                 Play Again
               </Button>
             </div>
           ) : null}
           <ScoreBoard details={RoomDetails} />
+          <Fab className="fab" color="primary" aria-label="add">
+            <ChatIcon />
+          </Fab>
 
           {/* <div>
             <div style={{ width: "max-content", margin: "0 auto" }}>
