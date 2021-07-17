@@ -1,36 +1,36 @@
-import React from 'react';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import './ScoreBoard.css';
+import React from "react";
+import Card from "@material-ui/core/Card";
+import CardActionArea from "@material-ui/core/CardActionArea";
+import CardContent from "@material-ui/core/CardContent";
+import Typography from "@material-ui/core/Typography";
+import "./ScoreBoard.css";
 
 const ScoreBoard = (props) => {
   return (
-    <div className='mainDiv'>
+    <div className="mainDiv">
       <p
         style={{
-          color: 'yellowgreen',
-          padding: '10px',
-          fontSize: 'xx-large',
-          fontFamily: 'Otomanopee One',
+          color: "#531353",
+          padding: "10px",
+          fontSize: "xx-large",
+          fontFamily: "Otomanopee One",
+          margin: "0px",
         }}
       >
         ScoreBoard
       </p>
-      {console.log(props.details)}
-      <div className='innerDiv'>
-        <div className='cardDiv'>
+      <div className="innerDiv">
+        <div className="cardDiv">
           <Card>
             <CardActionArea>
               <CardContent>
-                <Typography gutterBottom variant='h5' component='h2'>
-                  <span style={{ fontFamily: 'Otomanopee One', margin: '0' }}>
+                <Typography gutterBottom variant="h5" component="h2">
+                  <span style={{ fontFamily: "Otomanopee One", margin: "0" }}>
                     {props.details.Player1}
                   </span>
                 </Typography>
-                <Typography variant='body2' color='textSecondary' component='p'>
-                  <span style={{ margin: '0', fontSize: '1.875rem' }}>
+                <Typography variant="body2" color="textSecondary" component="p">
+                  <span style={{ margin: "0", fontSize: "1.875rem" }}>
                     {props.details.Player1Score}
                   </span>
                 </Typography>
@@ -38,17 +38,17 @@ const ScoreBoard = (props) => {
             </CardActionArea>
           </Card>
         </div>
-        <div className='cardDiv'>
+        <div className="cardDiv">
           <Card>
             <CardActionArea>
               <CardContent>
-                <Typography gutterBottom variant='h5' component='h2'>
-                  <span style={{ fontFamily: 'Otomanopee One', margin: '0' }}>
+                <Typography gutterBottom variant="h5" component="h2">
+                  <span style={{ fontFamily: "Otomanopee One", margin: "0" }}>
                     {props.details.Player2}
                   </span>
                 </Typography>
-                <Typography variant='body2' color='textSecondary' component='p'>
-                  <span style={{ margin: '0', fontSize: '1.875rem' }}>
+                <Typography variant="body2" color="textSecondary" component="p">
+                  <span style={{ margin: "0", fontSize: "1.875rem" }}>
                     {props.details.Player2Score}
                   </span>
                 </Typography>

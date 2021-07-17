@@ -82,13 +82,20 @@
   border-radius: 10px;
 }
 
+.fab {
+  position: absolute !important;
+
+  right: 20px;
+  bottom: 20px;
+}
+
 .gameContainer {
   display: flex;
   margin: 35px 0px;
 }
 
 .gameOuter {
-  width: 50%;
+  width: 100%;
 }
 
 /* .innermessagesContainer::-webkit-scrollbar {
@@ -106,8 +113,12 @@
   width: 80%;
 }
 
-::-webkit-scrollbar{
+::-webkit-scrollbar {
   width: 5px;
+}
+
+.status {
+  margin: 0px;
 }
 
 @media (max-width: 700px) {
@@ -146,5 +157,8 @@
   .messagesContainer {
     width: 100%;
     display: none;
+  }
+  .status {
+    margin: 15px;
   }
 }
