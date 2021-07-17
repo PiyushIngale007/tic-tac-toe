@@ -19,7 +19,6 @@ const ScoreBoard = (props) => {
       >
         ScoreBoard
       </p>
-      {console.log(props.details)}
       <div className="innerDiv">
         <div className="cardDiv">
           <Card>

@@ -6,8 +6,6 @@ import user from "../../assets/user.png";
 let socket = io("http://localhost:5000");
 let userResponse = "";
 const ChatComponent = (props) => {
-  console.log(props.mvalue);
-
   useEffect(() => {
     if (props.mvalue !== userResponse) {
       userResponse = props.mvalue;
@@ -16,7 +14,6 @@ const ChatComponent = (props) => {
   });
 
   const handleNewUserMessage = (newMessage) => {
-    console.log(`New message incoming! ${newMessage}`);
     socket.emit(
       "testvalue",
       newMessage,

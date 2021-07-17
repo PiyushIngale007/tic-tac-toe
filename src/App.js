@@ -96,14 +96,6 @@ function App() {
     RoomDetails.Player2,
   ]);
 
-  // useEffect(() => {
-  //   if (messages.length !== 0) {
-  //     document
-  //       .getElementById("innermessagesContainer")
-  //       .lastChild.scrollIntoView(false);
-  //   }
-  // }, [messages]);
-
   useEffect(() => {
     return () => {
       // This line only evaluates to true after the componentWillUnmount happens
@@ -167,11 +159,9 @@ function App() {
           marked.push(num);
         }
 
-        // console.log(document.getElementById(num));
         document.getElementById(num).style.pointerEvents = "none";
         const els = document.getElementsByClassName("btn");
         Array.prototype.forEach.call(els, function (el, index) {
-          // Do stuff here
           if (marked.includes(index + 1)) {
             el.style.pointerEvents = "none";
           } else {
@@ -179,13 +169,10 @@ function App() {
           }
         });
         socket.off("draw");
-        // document.getElementsByClassName('btn').style.pointerEvents = 'auto';
       });
     }
     socket.off("result");
     socket.on("result", (name) => {
-      console.log(name);
-
       setStatus(name === "Draw" ? "Match is draw" : name + " is the winnner");
       setResults(true);
       const els = document.getElementsByClassName("btn");
@@ -248,20 +235,6 @@ function App() {
       }
       flag = false;
       setPlayerPiece(roomDetails.Player2Piece);
-
-      // if (roomDetails.Player2Piece === "X") {
-      //   const els = document.getElementsByClassName("btn");
-      //   Array.prototype.forEach.call(els, function (el) {
-      //     // Do stuff here
-      //     el.style.pointerEvents = "auto";
-      //   });
-      // } else {
-      //   const els = document.getElementsByClassName("btn");
-      //   Array.prototype.forEach.call(els, function (el) {
-      //     // Do stuff here
-      //     el.style.pointerEvents = "none";
-      //   });
-      // }
     });
   };
   const startGame = async () => {
@@ -269,13 +242,6 @@ function App() {
     setRoomDetails({ ...RoomDetails, Player1: name });
 
     onClose();
-  };
-
-  const testfunc = (message1) => {
-    console.log(message1);
-    socket.emit("testvalue", message1, RoomId !== "" ? RoomId : joinValue);
-    setMessages([...messages, { message: message1, role: "sender" }]);
-    settestState("");
   };
 
   const playAgain = () => {
@@ -544,70 +510,6 @@ function App() {
               RoomId={RoomDetails.RoomId}
               joinValue={joinValue}
             />
-            {/* <div className="messagesContainer">
-              <div
-                className="innermessagesContainer"
-                id="innermessagesContainer"
-                style={{
-                  width: "95%",
-                  height: "440px",
-                  margin: "0 auto",
-                  overflow: "auto",
-                  // backgroundColor: 'antiquewhite',
-                }}
-              >
-                {messages.map((message, index) => {
-                  if (message.role === "reciever") {
-                    return (
-                      <div key={"p" + index}>
-                        <p
-                          style={{
-                            padding: "15px",
-                            margin: "5px",
-                            border: "2px solid",
-                            borderRadius: "200px",
-                            width: "max-content",
-                            backgroundColor: "#2196f3",
-                          }}
-                        >
-                          {message.message}
-                        </p>
-                      </div>
-                    );
-                  } else {
-                    return (
-                      <div
-                        style={{ textAlign: "-webkit-right" }}
-                        key={"p" + index}
-                      >
-                        <p
-                          style={{
-                            padding: "15px",
-                            margin: "5px",
-                            border: "2px solid",
-                            borderRadius: "200px",
-                            width: "max-content",
-                            backgroundColor: "#43a047",
-                          }}
-                        >
-                          {message.message}
-                        </p>
-                      </div>
-                    );
-                  }
-                })}
-              </div>
-              <div style={{ textAlign: "center" }}>
-                <Input
-                  className="messageInput"
-                  value={testState}
-                  onChange={(e) => {
-                    settestState(e.target.value);
-                  }}
-                ></Input>
-                <Button onClick={testfunc}>Send</Button>
-              </div>
-            </div> */}
           </div>
           {results ? (
             <div style={{ textAlign: "center", marginBottom: "20px" }}>
@@ -620,48 +522,6 @@ function App() {
           <Fab className="fab" color="primary" aria-label="add">
             <ChatIcon />
           </Fab>
-
-          {/* <div>
-            <div style={{ width: "max-content", margin: "0 auto" }}>
-              <div>
-                <p
-                  style={{
-                    padding: "0 50px 0 50px",
-                    fontSize: "2em",
-                    borderBottom: "5px solid",
-                    textAlign: "center",
-                    width: "max-content",
-                    margin: "0 auto",
-                    marginTop: "50px",
-                  }}
-                >
-                  Score Board
-                </p>
-              </div>
-              <div style={{ display: "flex", justifyContent: "center" }}>
-                <div
-                  style={{
-                    padding: "15px",
-                    width: "50%",
-                    textAlign: "center",
-                    borderRight: "2px solid",
-                  }}
-                >
-                  {RoomDetails.Player1}
-                </div>
-                <div
-                  style={{
-                    padding: "15px",
-                    width: "50%",
-                    textAlign: "center",
-                    borderLeft: "2px solid",
-                  }}
-                >
-                  {RoomDetails.Player2}
-                </div>
-              </div>
-            </div>
-          </div> */}
         </div>
       )}
     </div>
