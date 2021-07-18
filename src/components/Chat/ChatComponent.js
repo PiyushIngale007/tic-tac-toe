@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
-import { Chat, addResponseMessage } from "react-chat-popup";
-import { io } from "socket.io-client";
-import user from "../../assets/user.png";
+import React, { useEffect } from 'react';
+import { Widget, addResponseMessage } from 'react-chat-widget';
+import { io } from 'socket.io-client';
+import user from '../../assets/user.png';
+import 'react-chat-widget/lib/styles.css';
+import './chatComponent.css';
 
-let socket = io("http://localhost:5000");
-let userResponse = "";
+let socket = io('http://localhost:5000');
+let userResponse = '';
 const ChatComponent = (props) => {
   useEffect(() => {
     if (props.mvalue !== userResponse) {
@@ -15,18 +17,18 @@ const ChatComponent = (props) => {
 
   const handleNewUserMessage = (newMessage) => {
     socket.emit(
-      "testvalue",
+      'testvalue',
       newMessage,
-      props.RoomId !== "" ? props.RoomId : props.joinValue
+      props.RoomId !== '' ? props.RoomId : props.joinValue
     );
     userResponse = newMessage;
   };
   return (
-    <div>
-      <Chat
+    <div className='App'>
+      <Widget
         handleNewUserMessage={handleNewUserMessage}
         profileAvatar={user}
-        title="Chat"
+        title='Chat'
       />
     </div>
   );
