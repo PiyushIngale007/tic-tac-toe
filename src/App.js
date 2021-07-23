@@ -13,7 +13,7 @@ import JoinIcon from './assets/link.png';
 import ScoreBoard from './components/ScoreBoard/ScoreBoard';
 import ChatComponent from './components/Chat/ChatComponent';
 
-let socket = io('http://localhost:5000');
+let socket = io('https://tic--tac--toe--server.herokuapp.com/');
 let marked = [];
 let flag = true;
 let RoomIddisconnect = '';
@@ -211,7 +211,7 @@ function App() {
 
   const create = () => {
     setCreateJoin('create');
-    socket = io('http://localhost:5000');
+    socket = io('https://tic--tac--toe--server.herokuapp.com/');
     socket.on('create-game', (room_id) => {
       socket.emit('join-game', room_id);
       setRoomId(room_id);
@@ -231,7 +231,7 @@ function App() {
   };
 
   const join = () => {
-    socket = io('http://localhost:5000');
+    socket = io('https://tic--tac--toe--server.herokuapp.com/');
     socket.emit('join-game', joinValue, name);
     setRoomId(joinValue);
     socket.on('validate', (valid, roomDetails) => {
