@@ -5,7 +5,7 @@ import user from '../../assets/user.png';
 import 'react-chat-widget/lib/styles.css';
 import './chatComponent.css';
 
-let socket = io('http://localhost:5000');
+let socket = io('https://tic--tac--toe--server.herokuapp.com/');
 let userResponse = '';
 const ChatComponent = (props) => {
   useEffect(() => {

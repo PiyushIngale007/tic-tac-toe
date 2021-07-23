@@ -4,19 +4,19 @@ import { io } from 'socket.io-client';
 import CopyIcon from './assets/copy.svg';
 import PasteIcon from './assets/paste.png';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import { Card, CardContent, Input, Button } from '@material-ui/core';
-import Fab from '@material-ui/core/Fab';
-import ChatIcon from '@material-ui/icons/Chat';
+
 import CreateIcon from './assets/pen.png';
 import JoinIcon from './assets/link.png';
 import ScoreBoard from './components/ScoreBoard/ScoreBoard';
 import ChatComponent from './components/Chat/ChatComponent';
 
-let socket = io('http://localhost:5000');
+let socket = io('https://tic--tac--toe--server.herokuapp.com/');
 let marked = [];
 let flag = true;
+let RoomIddisconnect = '';
 function App() {
   const [modalIsOpen, setIsOpen] = useState(true);
   const [createJoin, setCreateJoin] = useState('');
@@ -39,22 +39,29 @@ function App() {
 
   const [status, setStatus] = useState('Waiting');
 
-  const componentWillUnmount = useRef(false);
+  // const componentWillUnmount = useRef(false);
 
-  try {
-    var objDiv = document.getElementById('innermessagesContainer');
-    objDiv.scrollIntoView({
-      behavior: 'smooth',
-      block: 'end',
-      inline: 'nearest',
-    });
-  } catch (error) {}
+  //Things to do before unloading/closing the tab
+  const doSomethingBeforeUnload = () => {
+    // Do something
+
+    socket.emit('leave', RoomIddisconnect);
+  };
 
   useEffect(() => {
-    return () => {
-      componentWillUnmount.current = true;
-    };
-  }, []);
+    // Activate the event listener
+    RoomIddisconnect = RoomId;
+    window.addEventListener('beforeunload', (ev) => {
+      ev.preventDefault();
+      return doSomethingBeforeUnload();
+    });
+  }, [RoomId]);
+
+  // useEffect(() => {
+  //   return () => {
+  //     componentWillUnmount.current = true;
+  //   };
+  // }, []);
 
   useEffect(() => {
     if (flag) {
@@ -96,15 +103,15 @@ function App() {
     RoomDetails.Player2,
   ]);
 
-  useEffect(() => {
-    return () => {
-      // This line only evaluates to true after the componentWillUnmount happens
-      if (componentWillUnmount.current) {
-        socket.emit('disconnecting1', RoomId);
-        socket.disconnect();
-      }
-    };
-  }, [RoomId]);
+  // useEffect(() => {
+  //   return () => {
+  //     // This line only evaluates to true after the componentWillUnmount happens
+  //     if (componentWillUnmount.current) {
+  //       socket.emit('disconnecting1', RoomId);
+  //       socket.disconnect();
+  //     }
+  //   };
+  // }, [RoomId]);
 
   function btn_clk(number) {
     if (!results) {
@@ -204,7 +211,7 @@ function App() {
 
   const create = () => {
     setCreateJoin('create');
-    socket = io('http://localhost:5000');
+    socket = io('https://tic--tac--toe--server.herokuapp.com/');
     socket.on('create-game', (room_id) => {
       socket.emit('join-game', room_id);
       setRoomId(room_id);
@@ -224,8 +231,9 @@ function App() {
   };
 
   const join = () => {
-    socket = io('http://localhost:5000');
+    socket = io('https://tic--tac--toe--server.herokuapp.com/');
     socket.emit('join-game', joinValue, name);
+    setRoomId(joinValue);
     socket.on('validate', (valid, roomDetails) => {
       if (valid) {
         setRoomDetails(roomDetails);
