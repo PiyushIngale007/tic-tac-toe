@@ -7,6 +7,10 @@
   color: white;
 }
 
+.modal-div{
+  background-color: #3c3f41!important;
+}
+
 .ReactModal__Content {
   background-color: #3c3f41 !important;
   border-radius: 20px !important;
@@ -123,7 +127,7 @@
 
 @media (max-width: 700px) {
   .card {
-    margin: 50px;
+    margin: 25px;
     min-width: min-content;
   }
 
@@ -160,5 +164,24 @@
   }
   .status {
     margin: 15px;
+  }
+
+  .ReactModal__Overlay--after-open{
+    background-color: #3c3f41 !important;
+  }
+  .text {
+    text-align: center;
+    font-size: 1.5em;
+    margin:10px 0 10px 0 !important
+  }
+  .img {
+    height: auto;
+    padding: 35px;
+    width: 100px;
+    display: block;
+    min-width: 50px;
+  }
+  .modal-title{
+    margin: 0;
   }
 }

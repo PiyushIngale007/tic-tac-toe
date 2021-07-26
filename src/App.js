@@ -355,6 +355,8 @@ function App() {
           //   });
           // }
           flag = false;
+        } else if (val === 'Other Player has disconnected!') {
+          alert(val);
         } else {
           settestState(val);
           socket.off('testvalue');
@@ -435,8 +437,9 @@ function App() {
       {display()}
       {listen()}
       {modalIsOpen ? (
-        <div className='modal-div'>
+        <div>
           <Modal
+            center
             style={{ backgroundColor: '#3C3F41' }}
             ariaHideApp={false}
             isOpen={modalIsOpen}
@@ -445,6 +448,7 @@ function App() {
             {createJoin === '' ? (
               <div>
                 <p
+                  className='modal-title'
                   style={{
                     fontSize: '2em',
                     color: 'white',
