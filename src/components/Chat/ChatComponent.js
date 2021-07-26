@@ -24,7 +24,7 @@ const ChatComponent = (props) => {
     userResponse = newMessage;
   };
   return (
-    <div className='App'>
+    <div>
       <Widget
         handleNewUserMessage={handleNewUserMessage}
         profileAvatar={user}
