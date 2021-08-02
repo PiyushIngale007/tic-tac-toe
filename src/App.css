@@ -25,6 +25,20 @@
   display: flex;
   justify-content: center;
 }
+.imgCopy{
+  display: flex;
+}
+.imgCopy:hover:after{
+  content: "Copy to Clipboard";
+  display: block;
+  height: max-content;
+  background-color: burlywood;
+  padding: 10px;
+  position: absolute;
+  top: 48%;
+  left: 50%;
+
+}
 
 .imgCopy:hover {
   cursor: pointer;
@@ -171,7 +185,7 @@
   }
   .text {
     text-align: center;
-    font-size: 1.5em;
+    font-size: 1em;
     margin:10px 0 10px 0 !important
   }
   .img {
@@ -183,5 +197,16 @@
   }
   .modal-title{
     margin: 0;
+  }
+  .imgCopy:hover:after{
+    content: "Copy to Clipboard";
+    display: block;
+    height: max-content;
+    background-color: burlywood;
+    padding: 10px;
+    position: absolute;
+    top: 65%;
+    left: 50%;
+  
   }
 }

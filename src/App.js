@@ -1,17 +1,19 @@
 import './App.css';
 import Game from './components/Game/Game';
 import { io } from 'socket.io-client';
-import CopyIcon from './assets/copy.svg';
-import PasteIcon from './assets/paste.png';
 
 import { useEffect, useState } from 'react';
 import Modal from 'react-modal';
-import { Card, CardContent, Input, Button } from '@material-ui/core';
+import { Card, CardContent, Button } from '@material-ui/core';
 
 import CreateIcon from './assets/pen.png';
 import JoinIcon from './assets/link.png';
 import ScoreBoard from './components/ScoreBoard/ScoreBoard';
 import ChatComponent from './components/Chat/ChatComponent';
+import CreateBtnClk from './components/CreateBtnClk/CreateBtnClk';
+import JoinBtnClk from './components/JoinBtnClk/JoinBtnClk';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 let socket = io('https://tic--tac--toe--server.herokuapp.com/');
 let marked = [];
@@ -39,8 +41,6 @@ function App() {
 
   const [status, setStatus] = useState('Waiting');
 
-  // const componentWillUnmount = useRef(false);
-
   //Things to do before unloading/closing the tab
   const doSomethingBeforeUnload = () => {
     // Do something
@@ -56,12 +56,6 @@ function App() {
       return doSomethingBeforeUnload();
     });
   }, [RoomId]);
-
-  // useEffect(() => {
-  //   return () => {
-  //     componentWillUnmount.current = true;
-  //   };
-  // }, []);
 
   useEffect(() => {
     if (flag) {
@@ -103,17 +97,8 @@ function App() {
     RoomDetails.Player2,
   ]);
 
-  // useEffect(() => {
-  //   return () => {
-  //     // This line only evaluates to true after the componentWillUnmount happens
-  //     if (componentWillUnmount.current) {
-  //       socket.emit('disconnecting1', RoomId);
-  //       socket.disconnect();
-  //     }
-  //   };
-  // }, [RoomId]);
-
   function btn_clk(number) {
+    //use for
     if (!results) {
       socket.emit('onDivClick', number, RoomDetails, playerPiece);
       document.getElementById(number).style.pointerEvents = 'none';
@@ -129,6 +114,7 @@ function App() {
           : RoomDetails.Player1 + "'s turn"
       );
 
+      // to nullify pointer events on the buttons
       const els = document.getElementsByClassName('btn');
       Array.prototype.forEach.call(els, function (el) {
         // Do stuff here
@@ -219,37 +205,34 @@ function App() {
     setPlayerPiece(RoomDetails.Player1Piece);
   };
 
-  const copykey = () => {
-    navigator.clipboard.writeText(RoomId);
-  };
-
-  const pastekey = () => {
-    navigator.clipboard.readText().then((text) => {
-      document.getElementById('paste').value = text;
-      setJoinValue(document.getElementById('paste').value);
-    });
-  };
-
   const join = () => {
     socket = io('https://tic--tac--toe--server.herokuapp.com/');
-    socket.emit('join-game', joinValue, name);
-    setRoomId(joinValue);
-    socket.on('validate', (valid, roomDetails) => {
-      if (valid) {
-        setRoomDetails(roomDetails);
-        onClose();
-      } else {
-        alert('Enter Valid Room ID');
-      }
-      flag = false;
-      setPlayerPiece(roomDetails.Player2Piece);
-    });
+    if (name !== '' && joinValue !== '') {
+      socket.emit('join-game', joinValue, name);
+      setRoomId(joinValue);
+      socket.on('validate', (valid, roomDetails) => {
+        if (valid) {
+          setRoomDetails(roomDetails);
+          onClose();
+        } else {
+          alert('Enter Valid Room ID');
+        }
+        flag = false;
+        setPlayerPiece(roomDetails.Player2Piece);
+      });
+    } else {
+      toast.warn('Enter Name and RoomId');
+    }
   };
   const startGame = async () => {
-    socket.emit('create-game', name);
-    setRoomDetails({ ...RoomDetails, Player1: name });
+    if (name !== '') {
+      socket.emit('create-game', name);
+      setRoomDetails({ ...RoomDetails, Player1: name });
 
-    onClose();
+      onClose();
+    } else {
+      toast.warn('Please Enter Name');
+    }
   };
 
   const playAgain = () => {
@@ -265,73 +248,6 @@ function App() {
     setResults(false);
     setMoves(['', '', '', '', '', '', '', '', '']);
     marked = [];
-  };
-
-  const CreateBtnClk = () => {
-    return (
-      <div>
-        <p
-          style={{
-            fontFamily: 'Otomanopee One',
-            fontSize: '2em',
-            color: 'white',
-            textAlign: 'center',
-          }}
-        >
-          Create a Game
-        </p>
-        <p style={{ fontSize: '2em', color: 'white', textAlign: 'center' }}>
-          Please type your name :{' '}
-        </p>
-        <div className='nameInput'>
-          <Input
-            onChange={(e) => {
-              setName(e.target.value);
-            }}
-            style={{ margin: '25px' }}
-            placeholder={'Name'}
-          />
-        </div>
-        <p style={{ fontSize: '2em', color: 'white', textAlign: 'center' }}>
-          Your Game Room id is :{' '}
-        </p>
-        <div className='id-div'>
-          <p
-            id='copyId'
-            style={{
-              paddingLeft: '20px',
-              paddingRight: '20px',
-              fontSize: '2em',
-              color: 'white',
-              textAlign: 'center',
-            }}
-          >
-            {RoomId}
-          </p>
-          <img
-            className='imgCopy'
-            onClick={copykey}
-            width='25px'
-            style={{ display: 'inline-flex', verticalAlign: 'middle' }}
-            src={CopyIcon}
-            alt=''
-          />
-        </div>
-        <Button
-          onClick={() => startGame()}
-          style={{
-            display: 'flex',
-            margin: '0 auto',
-            marginTop: '50px',
-            width: 'max-content',
-          }}
-          variant='contained'
-          color='primary'
-        >
-          Start Game
-        </Button>
-      </div>
-    );
   };
 
   const display = () => {
@@ -356,7 +272,7 @@ function App() {
           // }
           flag = false;
         } else if (val === 'Other Player has disconnected!') {
-          alert(val);
+          toast.info(val);
         } else {
           settestState(val);
           socket.off('testvalue');
@@ -366,72 +282,6 @@ function App() {
     } catch (e) {}
   };
 
-  const JoinBtnClk = () => {
-    return (
-      <div>
-        <p
-          style={{
-            fontFamily: 'Fira Sans',
-            fontSize: '2em',
-            color: 'white',
-            textAlign: 'center',
-          }}
-        >
-          Join a Game
-        </p>
-        <p style={{ fontSize: '2em', color: 'white', textAlign: 'center' }}>
-          Please type your name :{' '}
-        </p>
-        <div className='nameInput'>
-          <Input
-            onChange={(e) => {
-              setName(e.target.value);
-            }}
-            style={{ margin: '25px' }}
-            placeholder={'Name'}
-          />
-        </div>
-        <p style={{ fontSize: '2em', color: 'white', textAlign: 'center' }}>
-          Enter the Game Room id :{' '}
-        </p>
-
-        <div
-          className='nameInput'
-          style={{
-            marginTop: '100px',
-            textAlign: 'center',
-          }}
-        >
-          <Input
-            onChange={(e) => {
-              setJoinValue(e.target.value);
-            }}
-            id='paste'
-            style={{ margin: '25px' }}
-            placeholder={'ROOM ID'}
-          />
-          <img
-            onClick={pastekey}
-            style={{
-              display: 'inline-flex',
-              verticalAlign: 'middle',
-              cursor: 'pointer',
-            }}
-            src={PasteIcon}
-            alt=''
-          />
-        </div>
-        <Button
-          onClick={join}
-          style={{ display: 'flex', margin: '0 auto', width: 'max-content' }}
-          variant='contained'
-          color='primary'
-        >
-          Check ID
-        </Button>
-      </div>
-    );
-  };
   return (
     <div>
       {display()}
@@ -482,9 +332,17 @@ function App() {
                 </div>
               </div>
             ) : createJoin === 'create' ? (
-              CreateBtnClk()
+              <CreateBtnClk
+                BtnClk={() => startGame()}
+                setname={(name) => setName(name)}
+                roomid={RoomId}
+              />
             ) : (
-              JoinBtnClk()
+              <JoinBtnClk
+                BtnClk={() => join()}
+                setname={(name) => setName(name)}
+                setjoinvalue={(value) => setJoinValue(value)}
+              />
             )}
           </Modal>
         </div>
@@ -525,17 +383,20 @@ function App() {
           </div>
           {results ? (
             <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-              <Button onClick={playAgain} variant='contained' color='secondary'>
+              <Button
+                style={{ zIndex: '200' }}
+                onClick={playAgain}
+                variant='contained'
+                color='secondary'
+              >
                 Play Again
               </Button>
             </div>
           ) : null}
           <ScoreBoard details={RoomDetails} />
-          {/* <Fab className="fab" color="primary" aria-label="add">
-            <ChatIcon />
-          </Fab> */}
         </div>
       )}
+      <ToastContainer />
     </div>
   );
 }
