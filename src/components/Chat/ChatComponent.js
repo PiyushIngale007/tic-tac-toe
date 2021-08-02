@@ -14,6 +14,27 @@ const ChatComponent = (props) => {
       addResponseMessage(props.mvalue);
     }
   });
+  useEffect(() => {
+    const openBtn = document.getElementsByClassName('rcw-launcher')[0];
+    openBtn.addEventListener('click', (event) => {
+      document.getElementsByClassName('rcw-widget-container')[0].style.zIndex =
+        '201';
+      setTimeout(() => {
+        const closeBtn = document.getElementsByClassName('rcw-close-button')[0];
+        if (closeBtn !== undefined) {
+          closeBtn.addEventListener('click', () => {
+            document.getElementsByClassName(
+              'rcw-widget-container'
+            )[0].style.zIndex = '100';
+          });
+        }
+      }, 500);
+    });
+
+    return () => {
+      openBtn.removeEventListener('click');
+    };
+  }, []);
 
   const handleNewUserMessage = (newMessage) => {
     socket.emit(
