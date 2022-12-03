@@ -15,7 +15,7 @@ import JoinBtnClk from './components/JoinBtnClk/JoinBtnClk';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-let socket = io('https://tic--tac--toe--server.herokuapp.com/');
+let socket = io('https://tic-tac-toe--server.azurewebsites.net/');
 let marked = [];
 let flag = true;
 let RoomIddisconnect = '';
@@ -197,7 +197,7 @@ function App() {
 
   const create = () => {
     setCreateJoin('create');
-    socket = io('https://tic--tac--toe--server.herokuapp.com/');
+    socket = io('https://tic-tac-toe--server.azurewebsites.net/');
     socket.on('create-game', (room_id) => {
       socket.emit('join-game', room_id);
       setRoomId(room_id);
@@ -206,7 +206,7 @@ function App() {
   };
 
   const join = () => {
-    socket = io('https://tic--tac--toe--server.herokuapp.com/');
+    socket = io('https://tic-tac-toe--server.azurewebsites.net/');
     if (name !== '' && joinValue !== '') {
       socket.emit('join-game', joinValue, name);
       setRoomId(joinValue);
